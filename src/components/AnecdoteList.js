@@ -8,17 +8,10 @@ const Anecdote = ({ anecdote }) => {
   const dispatch = useDispatch()
   const searchText = useSelector(state => state.searchText)
   const voteNotification = async () => {
-    console.log(anecdote.id)
-    const votedAnecdote = await anecdoteService.updateVote(anecdote.id)
-    console.log(votedAnecdote)
-    console.log(votedAnecdote.id)
-    dispatch(voteAction(votedAnecdote.id))
-    dispatch(notificationEnable(`You voted for ${anecdote.content}`))
-    setTimeout(() => {
-      dispatch(notificationDisable())
-    }, 1000)
+    // const votedAnecdote = await anecdoteService.updateVote(anecdote.id)
+    dispatch(voteAction(anecdote.id))
+    dispatch(notificationEnable(`You voted for ${anecdote.content}`, 1))
   }
-  console.log(anecdote.content)
 
   if (anecdote.content.toString().toLowerCase().search(searchText.toString().toLowerCase()) >= 0) {
     return (

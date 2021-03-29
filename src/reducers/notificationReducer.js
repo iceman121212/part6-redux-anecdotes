@@ -9,10 +9,15 @@ const notificationReducer = (state = null, action) => {
   }
 }
 
-export const notificationEnable = notification => {
-  return {
-    type: 'TURN_ON',
-    notification: notification,
+export const notificationEnable = (notification, time) => {
+  return dispatch => {
+    dispatch({
+      type: 'TURN_ON',
+      notification: notification,
+    })
+    setTimeout(() => {
+      dispatch(notificationDisable())
+    }, time * 1000)
   }
 }
 

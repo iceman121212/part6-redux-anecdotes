@@ -14,16 +14,12 @@ const createNew = async (content) => {
 }
 
 const updateVote = async (id) => {
-  console.log(id)
   const url = `${baseUrl}/${id}`
   const all = await axios.get(baseUrl)
-  console.log(all)
   const anecdote = all.data.find(a => a.id === id)
   const updatedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
   const response = await axios.put(url, updatedAnecdote)
-  console.log(response)
   return response.data
-
 }
 
 export default { getAll, createNew, updateVote }
