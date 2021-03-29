@@ -1,13 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { voteAction } from '../reducers/anecdoteReducer'
 import { notificationEnable, notificationDisable } from '../reducers/notificationReducer'
+import anecdoteService from '../services/anecdotes'
 
 
 const Anecdote = ({ anecdote }) => {
   const dispatch = useDispatch()
   const searchText = useSelector(state => state.searchText)
-  const voteNotification = () => {
-    dispatch(voteAction(anecdote.id))
+  const voteNotification = async () => {
+    console.log(anecdote.id)
+    const votedAnecdote = await anecdoteService.updateVote(anecdote.id)
+    console.log(votedAnecdote)
+    console.log(votedAnecdote.id)
+    dispatch(voteAction(votedAnecdote.id))
     dispatch(notificationEnable(`You voted for ${anecdote.content}`))
     setTimeout(() => {
       dispatch(notificationDisable())
@@ -15,7 +20,7 @@ const Anecdote = ({ anecdote }) => {
   }
   console.log(anecdote.content)
 
-  if (anecdote.content.toLowerCase().search(searchText.toLowerCase()) >= 0) {
+  if (anecdote.content.toString().toLowerCase().search(searchText.toString().toLowerCase()) >= 0) {
     return (
       <div key={anecdote.id}>
         <div>
